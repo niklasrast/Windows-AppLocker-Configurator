@@ -1,4 +1,4 @@
-# SCRIPT NAME
+# AppLocker Configuration
 
 This repo contains an powershell scripts to configure the Windows AppLocker feature on an Windows 10 client. AppLocker enables you to restrict access from users to some applications like cmd, powershell or regedit. You can define which applications you want to block for users in the applocker.xml file in this repo.
 
