@@ -3,8 +3,8 @@
     Windows 10 
 
     .DESCRIPTION
-    Install:   PowerShell.exe -ExecutionPolicy Bypass -Command .\W10_AppLockerConfigurator.ps1 -install
-    Uninstall:   PowerShell.exe -ExecutionPolicy Bypass -Command .\W10_AppLockerConfigurator.ps1 -uninstall
+    Install:   PowerShell.exe -ExecutionPolicy Bypass -Command .\INSTALL-AppLockerConfigurator.ps1 -install
+    Uninstall:   PowerShell.exe -ExecutionPolicy Bypass -Command .\INSTALL-AppLockerConfigurator.ps1 -uninstall
 
     .ENVIRONMENT
     PowerShell 5.0
