@@ -20,7 +20,7 @@ PowerShell.exe -ExecutionPolicy Bypass -Command .\W10_AppLockerConfigurator.ps1 
 
 ### Parameter definitions:
 - -install configures applocker to block access to for cmd.exe, powershell.exe, powershell_ise.exe, regedit.exe and reg.exe standard users on your windows 10 clients
-- -uninstall removes currently nothing
+- -clears the applocker config
  
 ## Logfiles:
 The scripts create a logfile with the name of the .ps1 script in the folder C:\Windows\Logs.
