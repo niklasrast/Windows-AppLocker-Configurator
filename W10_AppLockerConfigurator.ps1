@@ -21,8 +21,14 @@ param(
 	[switch]$uninstall
 )
 
-$ErrorActionPreference="SilentlyContinue"
+$ErrorActionPreference = "SilentlyContinue"
+#Use "C:\Windows\Logs" for System Installs and "$env:TEMP" for User Installs
 $logFile = ('{0}\{1}.log' -f "C:\Windows\Logs", [System.IO.Path]::GetFileNameWithoutExtension($MyInvocation.MyCommand.Name))
+
+#Test if registry folder exists
+if ($true -ne (test-Path -Path "HKLM:\SOFTWARE\OS")) {
+    New-Item -Path "HKLM:\SOFTWARE\" -Name "OS" -Force
+}
 
 if ($install)
 {
@@ -30,12 +36,11 @@ if ($install)
         try
         {         
             #Install applocker.xml
-            Set-AppLockerPolicy -XMLPolicy "${PSScriptRoot}\applocker.xml"
+            Set-AppLockerPolicy -XMLPolicy "${PSScriptRoot}\applocker_block.xml"
             
-            New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" -Name "W10_AppLockerConfigurator" -Force
-            New-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\W10_AppLockerConfigurator" -Name "Version" -PropertyType "String" -Value "1.0" -Force
-            New-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\W10_AppLockerConfigurator" -Name "Revision" -PropertyType "String" -Value "001" -Force
-            New-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\W10_AppLockerConfigurator" -Name "LogFile" -PropertyType "String" -Value "${logFile}" -Force
+            #Register package in registry
+            New-Item -Path "HKLM:\SOFTWARE\OS\" -Name "AppLockerConfigurator"
+            New-ItemProperty -Path "HKLM:\SOFTWARE\OS\AppLockerConfigurator" -Name "Version" -PropertyType "String" -Value "1.0.0" -Force
         } 
         catch
         {
@@ -49,10 +54,11 @@ if ($uninstall)
     Start-Transcript -path $logFile
         try
         {
-            #Uninstall Script here...
-            Write-Host -ForegroundColor Red "AppLocker Policys können nicht automatisiert deinstalliert werden. Bitte deinstallieren Sie diese manuell über die lokale Sicherheitsrichtlinie"
-            
-            Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\W10_AppLockerConfigurator" -Force -Recurse
+            #Uninstall
+            Set-AppLockerPolicy -XMLPolicy "${PSScriptRoot}\applocker_allow.xml"
+
+            #Remove package registration in registry
+            Remove-Item -Path "HKLM:\SOFTWARE\OS\AppLockerConfigurator" -Recurse -Force 
         }
         catch
         {

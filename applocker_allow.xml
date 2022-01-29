@@ -1,0 +1,18 @@
+<AppLockerPolicy Version="1">
+  <RuleCollection Type="Appx" EnforcementMode="NotConfigured" />
+  <RuleCollection Type="Dll" EnforcementMode="NotConfigured" />
+  <RuleCollection Type="Exe" EnforcementMode="NotConfigured">
+    <FilePathRule Id="921cc481-6e17-4653-8f75-050b80acca20" Name="(Standardregel) Alle Dateien im Ordner &quot;Programme&quot;" Description="Ermöglicht Mitgliedern der Gruppe &quot;Jeder&quot; das Ausführen von Anwendungen, die sich im Ordner &quot;Programme&quot; befinden" UserOrGroupSid="S-1-1-0" Action="Allow">
+      <Conditions>
+        <FilePathCondition Path="%PROGRAMFILES%\*" />
+      </Conditions>
+    </FilePathRule>
+    <FilePathRule Id="a61c8b2c-a319-4cd0-9690-d2177cad7b51" Name="(Standardregel) Alle Dateien im Ordner &quot;Windows&quot;" Description="Ermöglicht Mitgliedern der Gruppe &quot;Jeder&quot; das Ausführen von Anwendungen, die sich im Ordner &quot;Windows&quot; befinden" UserOrGroupSid="S-1-1-0" Action="Allow">
+      <Conditions>
+        <FilePathCondition Path="%WINDIR%\*" />
+      </Conditions>
+    </FilePathRule>
+  </RuleCollection>
+  <RuleCollection Type="Msi" EnforcementMode="NotConfigured" />
+  <RuleCollection Type="Script" EnforcementMode="NotConfigured" />
+</AppLockerPolicy>
