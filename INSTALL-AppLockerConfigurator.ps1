@@ -26,8 +26,8 @@ $ErrorActionPreference = "SilentlyContinue"
 $logFile = ('{0}\{1}.log' -f "C:\Windows\Logs", [System.IO.Path]::GetFileNameWithoutExtension($MyInvocation.MyCommand.Name))
 
 #Test if registry folder exists
-if ($true -ne (test-Path -Path "HKLM:\SOFTWARE\OS")) {
-    New-Item -Path "HKLM:\SOFTWARE\" -Name "OS" -Force
+if ($true -ne (test-Path -Path "HKLM:\SOFTWARE\COMPANY")) {
+    New-Item -Path "HKLM:\SOFTWARE\" -Name "COMPANY" -Force
 }
 
 if ($install)
@@ -39,8 +39,8 @@ if ($install)
             Set-AppLockerPolicy -XMLPolicy "${PSScriptRoot}\applocker_block.xml"
             
             #Register package in registry
-            New-Item -Path "HKLM:\SOFTWARE\OS\" -Name "AppLockerConfigurator"
-            New-ItemProperty -Path "HKLM:\SOFTWARE\OS\AppLockerConfigurator" -Name "Version" -PropertyType "String" -Value "1.0.0" -Force
+            New-Item -Path "HKLM:\SOFTWARE\COMPANY\" -Name "AppLockerConfigurator"
+            New-ItemProperty -Path "HKLM:\SOFTWARE\COMPANY\AppLockerConfigurator" -Name "Version" -PropertyType "String" -Value "1.0.0" -Force
         } 
         catch
         {
@@ -58,7 +58,7 @@ if ($uninstall)
             Set-AppLockerPolicy -XMLPolicy "${PSScriptRoot}\applocker_allow.xml"
 
             #Remove package registration in registry
-            Remove-Item -Path "HKLM:\SOFTWARE\OS\AppLockerConfigurator" -Recurse -Force 
+            Remove-Item -Path "HKLM:\SOFTWARE\COMPANY\AppLockerConfigurator" -Recurse -Force 
         }
         catch
         {
